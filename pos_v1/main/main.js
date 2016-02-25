@@ -1,5 +1,13 @@
 //TODO: Please write code in this file.
 
+
+function printReceipt(itemCodes) {
+  var cartCodes = loadPurchasedItem(itemCodes);
+  var cartItems = loadAllInfoOfItem(cartCodes);
+  var discountItems = calculateDiscount(cartItems);
+  console.log(getReceipt(discountItems));
+}
+
 //Task loadPurchasedItem
 function loadPurchasedItem(barcodes) {
   var codes = divideBarcodes(barcodes);
