@@ -85,3 +85,57 @@ describe('loadAllInfoOfItem', function() {
     expect(output).toEqual(expectObject);
   });
 });
+
+//Task calculateDiscount
+describe('calculateDiscount', function() {
+  var allItems;
+  var inputs;
+
+  beforeEach(function() {
+    inputs = [
+      {
+        item:
+        {
+          barcode: 'ITEM000001',
+          name: '雪碧',
+          unit: '瓶',
+          price: 3.00
+        },
+        num: 5
+      },
+      {
+        item:
+        {
+          barcode: 'ITEM000003',
+          name: '荔枝',
+          unit: '斤',
+          price: 15.00
+        },
+        num: 2
+      },
+      {
+        item:
+        {
+          barcode: 'ITEM000005',
+          name: '方便面',
+          unit: '袋',
+          price: 4.50
+        },
+        num: 3
+      }
+    ];
+  });
+
+  it('should output correct array', function() {
+
+    var output = calculateDiscount(inputs);
+
+    var expectObject = [
+      {cartItem:inputs[0],totalPrice:15.00,discountPrice:3.00},
+      {cartItem:inputs[1],totalPrice:30.00,discountPrice:0.00},
+      {cartItem:inputs[2],totalPrice:13.50,discountPrice:4.50}
+    ];
+
+    expect(output).toEqual(expectObject);
+  });
+});
