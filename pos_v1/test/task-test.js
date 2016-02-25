@@ -51,24 +51,30 @@ describe('loadAllInfoOfItem', function() {
 
     var expectObject = [
       {
-        barcode: 'ITEM000000',
-        name: '可口可乐',
-        unit: '瓶',
-        price: 3.00,
+        {
+          barcode: 'ITEM000000',
+          name: '可口可乐',
+          unit: '瓶',
+          price: 3.00
+        },
         num: 5
       },
       {
-        barcode: 'ITEM000003',
-        name: '荔枝',
-        unit: '斤',
-        price: 15.00,
+        {
+          barcode: 'ITEM000003',
+          name: '荔枝',
+          unit: '斤',
+          price: 15.00
+        },
         num: 2
       },
       {
-        barcode: 'ITEM000005',
-        name: '方便面',
-        unit: '袋',
-        price: 4.50,
+        {
+          barcode: 'ITEM000005',
+          name: '方便面',
+          unit: '袋',
+          price: 4.50
+        },
         num: 3
       }
     ];
