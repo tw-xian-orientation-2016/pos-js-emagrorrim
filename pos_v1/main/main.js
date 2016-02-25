@@ -54,3 +54,64 @@ function searchItem(barcode) {
   }
   return null;
 }
+
+
+//Task calculateDiscount
+function calculateDiscount(cartItems) {
+  var discountItems = [];
+  for (var i = 0; i < cartItems.length; i++) {
+    var type = checkPromotion(cartItems[i].item.barcode);
+    var totalP = 0,discountP = 0;
+    if (type != null) {
+      discountP = parseInt(cartItems[i].num / 3) * cartItems[i].item.price;
+    }
+    totalP = cartItems[i].num * cartItems[i].item.price;
+    discountItems.push({ cartItem:cartItems[i],totalPrice:totalP,discountPrice:discountP });
+  }
+  return discountItems;
+}
+
+function checkPromotion(barcode) {
+  var promotions = loadPromotions();
+  for (var i = 0; i < promotions.length; i++) {
+    for (var j = 0; j < promotions[i].barcodes.length; j++) {
+      if (promotions[i].barcodes[j] == barcode) {
+        return promotions[i].type;
+      }
+    }
+  }
+  return null;
+}
+
+//Task getReceipt
+function getReceipt(discountItems) {
+  var recept = '***<没钱赚商店>收据***\n';
+  for (var i = 0; i < discountItems.length; i++) {
+    recept = recept +
+    '名称：'+discountItems[i].cartItem.item.name+
+    '，数量：'+discountItems[i].cartItem.num+discountItems[i].cartItem.item.unit+
+    '，单价：'+discountItems[i].cartItem.item.price.toFixed(2)+
+    '(元)，小计：'+(discountItems[i].totalPrice-discountItems[i].discountPrice).toFixed(2)+'(元)\n'
+  }
+  recept = recept + '----------------------\n'+
+  '总计：'+calculateTotalPrice(discountItems).toFixed(2)+'(元)\n'+
+  '节省：'+ calculateDiscountPrice(discountItems).toFixed(2) +'(元)\n' +
+  '**********************';
+  return recept;
+}
+
+function calculateTotalPrice(discountItems) {
+  var sum = 0;
+  for (var i = 0; i < discountItems.length; i++) {
+    sum += (discountItems[i].totalPrice - discountItems[i].discountPrice);
+  }
+  return sum;
+}
+
+function calculateDiscountPrice(discountItems) {
+  var sum = 0;
+  for (var i = 0; i < discountItems.length; i++) {
+    sum += discountItems[i].discountPrice;
+  }
+  return sum;
+}
