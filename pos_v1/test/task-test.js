@@ -14,6 +14,7 @@ describe('loadPurchasedItem', function() {
       'ITEM000005',
       'ITEM000005'
     ];
+
   });
 
   it('should output correct array', function() {
@@ -21,9 +22,9 @@ describe('loadPurchasedItem', function() {
     var output = loadPurchasedItem(inputs);
 
     var expectObject = [
-      {barcode:'ITEM000001',num:5},
-      {barcode:'ITEM000003',num:2},
-      {barcode:'ITEM000005',num:3}
+      { barcode:'ITEM000001', num:5 },
+      { barcode:'ITEM000003', num:2 },
+      { barcode:'ITEM000005', num:3 }
     ];
 
     expect(output).toEqual(expectObject);
@@ -36,9 +37,9 @@ describe('loadAllInfoOfItem', function() {
 
   beforeEach(function() {
     inputs = [
-      {barcode:'ITEM000001',num:5},
-      {barcode:'ITEM000003',num:2},
-      {barcode:'ITEM000005',num:3}
+      { barcode:'ITEM000001', num:5 },
+      { barcode:'ITEM000003', num:2 },
+      { barcode:'ITEM000005', num:3 }
     ];
 
   });
@@ -128,17 +129,14 @@ describe('calculateDiscount', function() {
     var output = calculateDiscount(inputs);
 
     var expectObject = [
-      {cartItem:inputs[0],totalPrice:15.00,discountPrice:3.00},
-      {cartItem:inputs[1],totalPrice:30.00,discountPrice:0.00},
-      {cartItem:inputs[2],totalPrice:13.50,discountPrice:4.50}
+      { cartItem:inputs[0], totalPrice:15.00, discountPrice:3.00 },
+      { cartItem:inputs[1], totalPrice:30.00, discountPrice:0.00 },
+      { cartItem:inputs[2], totalPrice:13.50, discountPrice:4.50 }
     ];
 
     expect(output).toEqual(expectObject);
   });
 });
-
-
-
 
 //Task getReceipt
 describe('getReceipt', function() {
@@ -178,11 +176,10 @@ describe('getReceipt', function() {
       }
     ];
 
-
     inputs = [
-      {cartItem:cartItems[0],totalPrice:15.00,discountPrice:3.00},
-      {cartItem:cartItems[1],totalPrice:30.00,discountPrice:0.00},
-      {cartItem:cartItems[2],totalPrice:13.50,discountPrice:4.50}
+      { cartItem:cartItems[0], totalPrice:15.00, discountPrice:3.00 },
+      { cartItem:cartItems[1], totalPrice:30.00, discountPrice:0.00 },
+      { cartItem:cartItems[2], totalPrice:13.50, discountPrice:4.50 }
     ];
   });
 
