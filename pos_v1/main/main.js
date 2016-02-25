@@ -1,4 +1,6 @@
 //TODO: Please write code in this file.
+
+//Task loadPurchasedItem
 function loadPurchasedItem(barcodes) {
   var codes = divideBarcodes(barcodes);
   var cartCodes = mergeSameBarcode(codes);
@@ -31,4 +33,24 @@ function mergeSameBarcode(codes) {
   }
   cartCodes.push({barcode:codes[codes.length - 1].barcode,num:count})
   return cartCodes;
+}
+
+//Task loadAllInfoOfItem
+function loadAllInfoOfItem(cartCodes) {
+  var cartItems = [];
+  for (var i = 0; i < cartCodes.length; i++) {
+    var oneItem = searchItem(cartCodes[i].barcode);
+    cartItems.push({ item: oneItem,num: cartCodes[i].num });
+  }
+  return cartItems;
+}
+
+function searchItem(barcode) {
+  var allItems = loadAllItems();
+  for (var i = 0; i < allItems.length; i++) {
+    if (allItems[i].barcode == barcode) {
+      return allItems[i];
+    }
+  }
+  return null;
 }
