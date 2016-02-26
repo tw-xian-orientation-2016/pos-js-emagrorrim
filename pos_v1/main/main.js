@@ -24,9 +24,9 @@ function loadPurchasedItem(tags) {
 }
 
 function getBarcodeCount(tag) {
-  var compnemts = tag.split('-');
-  var barcode = compnemts[0];
-  var count = parseInt(compnemts[1] || 1);
+  var components = tag.split('-');
+  var barcode = components[0];
+  var count = parseFloat(components[1] || 1);
 
   return { barcode: barcode, count: count };
 }
