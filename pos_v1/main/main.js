@@ -5,7 +5,6 @@ function printReceipt(itemCodes) {
   console.log(getReceipt(discountItems));
 }
 
-//Task loadPurchasedItem
 function loadPurchasedItem(tags) {
   var barcodeCounts = [];
 
@@ -39,7 +38,6 @@ function findElement(barcode, barcodeCounts) {
   }
 }
 
-//Task loadAllInfoOfItem
 function loadAllInfoOfItem(barcodeCounts) {
   var cartItems = [];
   for (var i = 0; i < barcodeCounts.length; i++) {
@@ -59,7 +57,6 @@ function getItem(barcode) {
   }
 }
 
-//Task calculateDiscount
 function calculateDiscount(cartItems) {
   var discountItems = [];
   for (var i = 0; i < cartItems.length; i++) {
@@ -70,13 +67,8 @@ function calculateDiscount(cartItems) {
     }
 
     totalPrice = cartItems[i].count * cartItems[i].item.price;
-    discountItems.push({
-                         cartItem: cartItems[i],
-                         totalPrice: totalPrice,
-                         reducedPrice: reducedPrice
-                       });
+    discountItems.push({ cartItem: cartItems[i], totalPrice: totalPrice, reducedPrice: reducedPrice });
   }
-
   return discountItems;
 }
 
@@ -91,37 +83,34 @@ function getPromotion(barcode) {
   }
 }
 
-//Task getReceipt
 function getReceipt(discountItems) {
-  var recept = '***<没钱赚商店>收据***\n';
+  var amount = 0, reducedAmount = 0;
+  var receipt = '***<没钱赚商店>收据***\n';
   for (var i = 0; i < discountItems.length; i++) {
-    var cartItem = discountItems[i].cartItem;
-    var totalPrice = discountItems[i].totalPrice;
-    var reducedPrice = discountItems[i].reducedPrice;
-
-    recept = recept +
-    '名称：' + cartItem.item.name + '，' +
-    '数量：' + cartItem.count + cartItem.item.unit + '，' +
-    '单价：' + cartItem.item.price.toFixed(2) +
-    '(元)，小计：'+( totalPrice - reducedPrice ).toFixed(2) +
-    '(元)\n'
+    var itemSummary = getItemSummary(discountItems[i]);
+    receipt += itemSummary;
+    amount += discountItems[i].totalPrice;
+    reducedAmount += discountItems[i].reducedPrice;
   }
 
-  var summary = getShoppingSummary(discountItems);
-
-  recept = recept + '----------------------\n' +
-  '总计：' + summary.totalPrice.toFixed(2) + '(元)\n' +
-  '节省：' + summary.reducedPrice.toFixed(2) + '(元)\n' +
+  receipt = receipt + '----------------------\n' +
+  '总计：' + (amount - reducedAmount).toFixed(2) + '(元)\n' +
+  '节省：' + reducedAmount.toFixed(2) + '(元)\n' +
   '**********************';
-  return recept;
+  return receipt;
 }
 
-function getShoppingSummary(discountItems) {
-  var totalPrice = 0, reducedPrice = 0;
-  for (var i = 0; i < discountItems.length; i++) {
-    totalPrice += (discountItems[i].totalPrice - discountItems[i].reducedPrice);
-    reducedPrice += discountItems[i].reducedPrice;
-  }
+function getItemSummary(discountItems) {
+  var cartItem = discountItems.cartItem;
+  var totalPrice = discountItems.totalPrice;
+  var reducedPrice = discountItems.reducedPrice;
 
-  return { totalPrice: totalPrice, reducedPrice: reducedPrice };
+  var itemSummary =
+  '名称：' + cartItem.item.name + '，' +
+  '数量：' + cartItem.count + cartItem.item.unit + '，' +
+  '单价：' + cartItem.item.price.toFixed(2) +
+  '(元)，小计：'+( totalPrice - reducedPrice ).toFixed(2) +
+  '(元)\n'
+
+  return itemSummary;
 }
