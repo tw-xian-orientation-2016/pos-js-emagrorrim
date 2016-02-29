@@ -1,8 +1,8 @@
 function printReceipt(itemCodes) {
   var barcodeCounts = loadPurchasedItem(itemCodes);
   var cartItems = loadAllInfoOfItem(barcodeCounts);
-  var discountItems = calculateDiscount(cartItems);
-  console.log(getReceipt(discountItems));
+  var receiptItems = calculateDiscount(cartItems);
+  console.log(getReceipt(receiptItems));
 }
 
 function loadPurchasedItem(tags) {
@@ -58,7 +58,7 @@ function getItem(barcode) {
 }
 
 function calculateDiscount(cartItems) {
-  var discountItems = [];
+  var receiptItems = [];
   for (var i = 0; i < cartItems.length; i++) {
     var type = getPromotion(cartItems[i].item.barcode);
     var totalPrice = 0, reducedPrice = 0;
@@ -67,9 +67,9 @@ function calculateDiscount(cartItems) {
     }
 
     totalPrice = cartItems[i].count * cartItems[i].item.price;
-    discountItems.push({ cartItem: cartItems[i], totalPrice: totalPrice, reducedPrice: reducedPrice });
+    receiptItems.push({ cartItem: cartItems[i], totalPrice: totalPrice, reducedPrice: reducedPrice });
   }
-  return discountItems;
+  return receiptItems;
 }
 
 function getPromotion(barcode) {
@@ -83,14 +83,14 @@ function getPromotion(barcode) {
   }
 }
 
-function getReceipt(discountItems) {
+function getReceipt(receiptItems) {
   var amount = 0, reducedAmount = 0;
   var receipt = '***<没钱赚商店>收据***\n';
-  for (var i = 0; i < discountItems.length; i++) {
-    var itemSummary = getItemSummary(discountItems[i]);
+  for (var i = 0; i < receiptItems.length; i++) {
+    var itemSummary = getItemSummary(receiptItems[i]);
     receipt += itemSummary;
-    amount += discountItems[i].totalPrice;
-    reducedAmount += discountItems[i].reducedPrice;
+    amount += receiptItems[i].totalPrice;
+    reducedAmount += receiptItems[i].reducedPrice;
   }
 
   receipt = receipt + '----------------------\n' +
@@ -100,10 +100,10 @@ function getReceipt(discountItems) {
   return receipt;
 }
 
-function getItemSummary(discountItems) {
-  var cartItem = discountItems.cartItem;
-  var totalPrice = discountItems.totalPrice;
-  var reducedPrice = discountItems.reducedPrice;
+function getItemSummary(receiptItems) {
+  var cartItem = receiptItems.cartItem;
+  var totalPrice = receiptItems.totalPrice;
+  var reducedPrice = receiptItems.reducedPrice;
 
   var itemSummary =
   '名称：' + cartItem.item.name + '，' +
