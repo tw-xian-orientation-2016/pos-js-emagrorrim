@@ -61,10 +61,8 @@ function calculateDiscount(cartItems) {
   var receiptItems = [];
   for (var i = 0; i < cartItems.length; i++) {
     var type = getPromotion(cartItems[i].item.barcode);
-    var totalPrice = 0, reducedPrice = 0;
-    if (type === 'BUY_TWO_GET_ONE_FREE') {
-      reducedPrice = parseInt(cartItems[i].count / 3, 10) * cartItems[i].item.price;
-    }
+    var totalPrice = 0;
+    var reducedPrice = getReducedPrice(type, cartItems[i]);
 
     totalPrice = cartItems[i].count * cartItems[i].item.price;
     receiptItems.push({ cartItem: cartItems[i], totalPrice: totalPrice, reducedPrice: reducedPrice });
@@ -81,6 +79,13 @@ function getPromotion(barcode) {
       }
     }
   }
+}
+
+function getReducedPrice(type, cartItem) {
+  if (type === 'BUY_TWO_GET_ONE_FREE') {
+    return parseInt(cartItem.count / 3) * cartItem.item.price;
+  }
+  return 0;
 }
 
 function getReceipt(receiptItems) {
